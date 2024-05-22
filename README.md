@@ -8,7 +8,10 @@ La sécurisation des infrastructures cloud est cruciale pour protéger les donn�
 
 ## Solution
 
-### 1. Configuration d'un Réseau Virtuel (VNet) Sécurisé
+
+# 1. Guide de Création d'un VNet avec des Sous-Réseaux Publics et Privés
+
+Configuration d'un Réseau Virtuel (VNet) Sécurisé
 [Utiliser le Portail Azure pour créer un réseau virtuel](https://learn.microsoft.com/fr-fr/azure/virtual-network/quick-create-portal)
 - **Description:** Création d'un VNet avec sous-réseaux publics et privés.
 - **Commandes Azure CLI:**
@@ -16,7 +19,6 @@ La sécurisation des infrastructures cloud est cruciale pour protéger les donn�
     az network vnet create --name myVnet --resource-group myResourceGroup --address-prefix 10.0.0.0/16
     az network vnet subnet create --address-prefix 10.0.1.0/24 --name mySubnet --vnet-name myVnet --resource-group myResourceGroup
     ```
-# Guide de Création d'un VNet avec des Sous-Réseaux Publics et Privés
 
 ## Étape 1 : Créer un VNet
 
@@ -109,14 +111,16 @@ Ces étapes vous permettent de créer un VNet avec des sous-réseaux publics et 
 - **Capture d'écran:**
     ![Création du VNet](URL_DE_VOTRE_IMAGE_VNET)
 
-### 2. Configuration des Groupes de Sécurité Réseau (NSG)
+
+# 2. Guide de Configuration des Groupes de Sécurité Réseau (NSG) pour Restreindre l'Accès aux Machines Virtuelles
+
+ Configuration des Groupes de Sécurité Réseau (NSG)
 - **Description:** Définition des règles NSG pour restreindre l'accès aux machines virtuelles.
 - **Commandes Azure CLI:**
     ```plaintext
     az network nsg create --resource-group myResourceGroup --name myNetworkSecurityGroup
     az network nsg rule create --resource-group myResourceGroup --nsg-name myNetworkSecurityGroup --name AllowSSH --protocol tcp --priority 1000 --destination-port-range 22 --access Allow
     ```
-# Guide de Configuration des Groupes de Sécurité Réseau (NSG) pour Restreindre l'Accès aux Machines Virtuelles
 
 ## Étape 1 : Créer un Groupe de Sécurité Réseau (NSG)
 
@@ -244,7 +248,10 @@ Ces étapes vous permettent de créer un VNet avec des sous-réseaux publics et 
 Ces étapes vous permettent de configurer un Groupe de Sécurité Réseau (NSG) dans Azure et de définir des règles pour restreindre l'accès aux machines virtuelles. Cela garantit une sécurité renforcée et un contrôle strict de l'accès au réseau.
 
 
-### 3. Utilisation de Azure Active Directory (AAD)
+
+# 3. Utilisation de Azure Active Directory (AAD)
+
+ Utilisation de Azure Active Directory (AAD)
 - **Description:** Création de rôles et d’utilisateurs avec des permissions minimales nécessaires. Mise en place de l'authentification multi-facteurs (MFA) pour les utilisateurs.
 - **Commandes Azure CLI:**
     ```plaintext
@@ -252,10 +259,6 @@ Ces étapes vous permettent de configurer un Groupe de Sécurité Réseau (NSG) 
     az ad group create --display-name "Developers" --mail-nickname "developers"
     az ad group member add --group "Developers" --member-id $(az ad user show --id john.doe@mydomain.com --query objectId -o tsv)
     ```
-# Utilisation de Azure Active Directory (AAD)
-
-## Description
-Création de rôles et d’utilisateurs avec des permissions minimales nécessaires. Mise en place de l'authentification multi-facteurs (MFA) pour les utilisateurs.
 
 ## Étape 1 : Créer un utilisateur dans Azure Active Directory
 
@@ -341,7 +344,11 @@ Création de rôles et d’utilisateurs avec des permissions minimales nécessai
 Ces étapes vous permettent de créer des utilisateurs et des rôles avec des permissions minimales dans Azure Active Directory, ainsi que de configurer l'authentification multi-facteurs (MFA) pour renforcer la sécurité des comptes utilisateurs.
 
 
-### 4. Configuration de Blob Storage avec des Politiques de Sécurité
+
+
+# 4. Configuration de Blob Storage avec des Politiques de Sécurité
+
+ Configuration de Blob Storage avec des Politiques de Sécurité
 - **Description:** Mise en place de politiques de conteneur pour restreindre l'accès. Activation du chiffrement côté serveur pour les objets stockés.
 - **Commandes Azure CLI:**
     ```plaintext
@@ -349,11 +356,6 @@ Ces étapes vous permettent de créer des utilisateurs et des rôles avec des pe
     az storage container create --name mycontainer --account-name mystorageaccount --public-access off
     az storage account update --name mystorageaccount --resource-group myResourceGroup --default-action Deny
     ```
-
-# Configuration de Blob Storage avec des Politiques de Sécurité
-
-## Description
-Mise en place de politiques de conteneur pour restreindre l'accès. Activation du chiffrement côté serveur pour les objets stockés.
 
 ## Étape 1 : Créer un compte de stockage
 
@@ -433,18 +435,17 @@ Ces étapes vous permettent de configurer un Blob Storage sécurisé dans Azure,
 
 
 
-### 5. Mise en Place d'Azure Monitor pour la Surveillance
+
+
+# 5. Mise en Place d'Azure Monitor pour la Surveillance
+
+ Mise en Place d'Azure Monitor pour la Surveillance
 - **Description:** Configuration des alertes et des logs pour surveiller l'activité des services.
 - **Commandes Azure CLI:**
     ```plaintext
     az monitor log-analytics workspace create --resource-group myResourceGroup --workspace-name myWorkspace
     az monitor diagnostic-settings create --resource-id $(az storage account show --name mystorageaccount --query id -o tsv) --workspace myWorkspace --logs '[{"category": "StorageRead", "enabled": true, "retentionPolicy": {"enabled": false}}, {"category": "StorageWrite", "enabled": true, "retentionPolicy": {"enabled": false}}]'
     ```
-
-# Mise en Place d'Azure Monitor pour la Surveillance
-
-## Description
-Configuration des alertes et des logs pour surveiller l'activité des services.
 
 ## Étape 1 : Configurer Azure Monitor
 
@@ -529,7 +530,10 @@ Ces étapes vous permettent de configurer Azure Monitor pour surveiller l'activi
 
 
 
-### 6. Configuration de Azure SQL Database Sécurisée
+ 
+# 6. Configuration de Azure SQL Database Sécurisée
+
+Configuration de Azure SQL Database Sécurisée
 - **Description:** Création d'une base de données SQL dans un sous-réseau privé. Activation de la sécurité au niveau des connexions avec SSL/TLS.
 - **Commandes Azure CLI:**
     ```plaintext
@@ -537,11 +541,6 @@ Ces étapes vous permettent de configurer Azure Monitor pour surveiller l'activi
     az sql db create --resource-group myResourceGroup --server mydemoserver --name mySampleDatabase --service-objective S0
     az sql server firewall-rule create --resource-group myResourceGroup --server mydemoserver --name AllowYourIp --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
     ```
-
-# Configuration de Azure SQL Database Sécurisée
-
-## Description
-Création d'une base de données SQL dans un sous-réseau privé. Activation de la sécurité au niveau des connexions avec SSL/TLS.
 
 ## Étape 1 : Créer un VNet et un sous-réseau privé
 
