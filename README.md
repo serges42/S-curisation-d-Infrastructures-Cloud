@@ -16,7 +16,96 @@ La sécurisation des infrastructures cloud est cruciale pour protéger les donn�
     az network vnet create --name myVnet --resource-group myResourceGroup --address-prefix 10.0.0.0/16
     az network vnet subnet create --address-prefix 10.0.1.0/24 --name mySubnet --vnet-name myVnet --resource-group myResourceGroup
     ```
-- Configuration des tables de routage pour isoler les sous-réseaux.
+# Guide de Création d'un VNet avec des Sous-Réseaux Publics et Privés
+
+## Étape 1 : Créer un VNet
+
+### 1. Se connecter au portail Azure
+- Allez sur le [portail Azure](https://portal.azure.com) et connectez-vous avec vos informations d'identification.
+
+### 2. Accéder à la création d'un VNet
+- Dans le menu de gauche, cliquez sur `Créer une ressource`.
+- Recherchez `Réseau Virtuel` et sélectionnez `Créer`.
+
+![Capture d'écran](https://docs.microsoft.com/en-us/azure/virtual-network/media/tutorial-create-vnet/vnet-create.png)
+
+### 3. Configurer les paramètres du VNet
+- Remplissez les champs nécessaires :
+  - Nom : `MonVNet`
+  - Espace d'adressage : `10.0.0.0/16`
+  - Groupe de ressources : `MonGroupeDeRessources`
+  - Région : Choisissez votre région
+
+![Capture d'écran](https://docs.microsoft.com/en-us/azure/virtual-network/media/tutorial-create-vnet/vnet-create-basic.png)
+
+## Étape 2 : Ajouter des sous-réseaux
+
+### 1. Configurer les sous-réseaux lors de la création du VNet
+- Sous l'onglet `Sous-réseaux`, cliquez sur `+ Ajouter un sous-réseau`.
+
+![Capture d'écran](https://docs.microsoft.com/en-us/azure/virtual-network/media/tutorial-create-vnet/vnet-create-subnet.png)
+
+### 2. Créer un sous-réseau public
+- Nom : `SousReseauPublic`
+- Plage d'adresses : `10.0.1.0/24`
+- Cliquez sur `Ajouter`.
+
+![Capture d'écran](https://docs.microsoft.com/en-us/azure/virtual-network/media/tutorial-create-vnet/vnet-create-subnet-settings.png)
+
+### 3. Créer un sous-réseau privé
+- Cliquez à nouveau sur `+ Ajouter un sous-réseau`.
+- Nom : `SousReseauPrive`
+- Plage d'adresses : `10.0.2.0/24`
+- Cliquez sur `Ajouter`.
+
+![Capture d'écran](https://docs.microsoft.com/en-us/azure/virtual-network/media/tutorial-create-vnet/vnet-create-subnet-settings-private.png)
+
+### 4. Finaliser la création du VNet
+- Vérifiez vos paramètres et cliquez sur `Revoir + créer`, puis `Créer`.
+
+## Étape 3 : Configurer les tables de routage
+
+### 1. Accéder aux tables de routage
+- Dans le menu de gauche, recherchez `Table de routage` et sélectionnez `Créer une table de routage`.
+
+![Capture d'écran](https://docs.microsoft.com/en-us/azure/virtual-network/media/tutorial-create-route-table/route-table-create.png)
+
+### 2. Créer une table de routage pour le sous-réseau public
+- Nom : `TableDeRoutagePublic`
+- Groupe de ressources : `MonGroupeDeRessources`
+- Région : Choisissez votre région
+- Cliquez sur `Revoir + créer`, puis `Créer`.
+
+![Capture d'écran](https://docs.microsoft.com/en-us/azure/virtual-network/media/tutorial-create-route-table/route-table-create-settings.png)
+
+### 3. Créer une table de routage pour le sous-réseau privé
+- Suivez les mêmes étapes pour créer une deuxième table de routage nommée `TableDeRoutagePrive`.
+
+### 4. Ajouter des routes aux tables de routage
+- Sélectionnez `TableDeRoutagePublic` et cliquez sur `Routes`, puis `Ajouter`.
+- Route vers internet :
+  - Nom : `RouteVersInternet`
+  - Préfixe d'adresse : `0.0.0.0/0`
+  - Next hop : `Passerelle Internet`
+- Cliquez sur `OK`.
+
+![Capture d'écran](https://docs.microsoft.com/en-us/azure/virtual-network/media/tutorial-create-route-table/route-table-create-route.png)
+
+### 5. Associer les tables de routage aux sous-réseaux
+- Accédez à la table de routage publique, cliquez sur `Sous-réseaux`, puis `Associer`.
+- Sélectionnez `MonVNet` et `SousReseauPublic`.
+- Répétez l'opération pour `TableDeRoutagePrive` en associant `SousReseauPrive`.
+
+![Capture d'écran](https://docs.microsoft.com/en-us/azure/virtual-network/media/tutorial-create-route-table/route-table-attach.png)
+
+## Étape 4 : Vérification et tests
+
+### 1. Vérifiez que les sous-réseaux sont correctement isolés et que le routage fonctionne comme prévu en testant la connectivité des ressources déployées dans chaque sous-réseau.
+
+## Conclusion
+
+Ces étapes vous permettent de créer un VNet avec des sous-réseaux publics et privés dans Azure et de configurer les tables de routage pour isoler les sous-réseaux. Cela garantit une segmentation du réseau et un meilleur contrôle du trafic.
+
 - **Capture d'écran:**
     ![Création du VNet](URL_DE_VOTRE_IMAGE_VNET)
 
