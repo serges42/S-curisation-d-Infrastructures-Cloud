@@ -9,6 +9,7 @@ La sécurisation des infrastructures cloud est cruciale pour protéger les donn�
 ## Solution
 
 ### 1. Configuration d'un Réseau Virtuel (VNet) Sécurisé
+[Utiliser le Portail Azure pour créer un réseau virtuel](https://learn.microsoft.com/fr-fr/azure/virtual-network/quick-create-portal)
 - **Description:** Création d'un VNet avec sous-réseaux publics et privés.
 - **Commandes Azure CLI:**
     ```plaintext
