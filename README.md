@@ -16,6 +16,7 @@ La sécurisation des infrastructures cloud est cruciale pour protéger les donn�
     az network vnet create --name myVnet --resource-group myResourceGroup --address-prefix 10.0.0.0/16
     az network vnet subnet create --address-prefix 10.0.1.0/24 --name mySubnet --vnet-name myVnet --resource-group myResourceGroup
     ```
+- Configuration des tables de routage pour isoler les sous-réseaux.
 - **Capture d'écran:**
     ![Création du VNet](URL_DE_VOTRE_IMAGE_VNET)
 
